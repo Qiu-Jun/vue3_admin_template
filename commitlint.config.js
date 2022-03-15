@@ -20,13 +20,7 @@ module.exports = {
                 'test',
                 'refactor',
                 'build',
-                'ci',
-                'chore',
-                'revert',
-                'wip',
-                'workflow',
-                'types',
-                'release'
+                'ci'
             ]
         ]
     }
