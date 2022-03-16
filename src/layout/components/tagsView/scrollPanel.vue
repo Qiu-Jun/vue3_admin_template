@@ -1,5 +1,15 @@
+<!--
+ * :Author: June
+ * :Date: 2022-03-07 02:12:16
+ * :LastEditTime: 2022-03-16 15:03:10
+ * :Description:
+-->
 <template>
-    <el-scrollbar ref="scrollContainer" class="scroll-container" @mousewheel.prevent="handleScroll">
+    <el-scrollbar
+        ref="scrollContainer"
+        class="scroll-container"
+        @mousewheel.prevent="handleScroll"
+    >
         <slot />
     </el-scrollbar>
 </template>
@@ -28,13 +38,12 @@ const handleScroll = throttle((e) => {
     position: relative;
     overflow: hidden;
     width: 100%;
-    :deep {
-        .el-scrollbar__bar {
-            bottom: 0px;
-        }
-        .el-scrollbar__wrap {
-            height: 49px;
-        }
+
+    :deep(.el-scrollbar__bar) {
+        bottom: 0px;
+    }
+    :deep(.el-scrollbar__wrap) {
+        height: 49px;
     }
 }
 </style>
