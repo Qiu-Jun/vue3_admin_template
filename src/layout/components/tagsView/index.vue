@@ -172,14 +172,16 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .tags-view-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     height: 34px;
     width: 100%;
     background: #fff;
     border-bottom: 1px solid #d8dce5;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 0 3px 0 rgba(0, 0, 0, 0.04);
     .tags-view-wrapper {
-        float: left;
-        width: 80%;
+        width: 76%;
         .tags-view-item {
             display: inline-block;
             position: relative;
@@ -237,8 +239,7 @@ export default defineComponent({
         }
     }
     .tag-view-menu {
-        float: right;
-        widows: 20%;
+        width: 24%;
         list-style: none;
         margin: 0;
         overflow: hidden;

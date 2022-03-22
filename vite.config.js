@@ -1,7 +1,7 @@
 /*
  * :Author: June
  * :Date: 2022-03-07 02:12:16
- * :LastEditTime: 2022-03-22 13:32:21
+ * :LastEditTime: 2022-03-22 15:53:08
  * :Description:
  */
 import { defineConfig, loadEnv } from 'vite'
@@ -12,11 +12,13 @@ import AutoImport from 'unplugin-auto-import/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons' // svg
 import { createHtmlPlugin } from 'vite-plugin-html'
+import autoprefixer from 'autoprefixer'
 
 export default ({ mode }) => {
     const envData = loadEnv(mode, process.cwd())
 
     return defineConfig({
+        base: './', // 设置打包路径
         plugins: [
             vue(),
             AutoImport({
@@ -58,24 +60,21 @@ export default ({ mode }) => {
                 }
             },
             postcss: {
-                plugins: []
+                plugins: [autoprefixer()]
             }
         },
-        base: './' // 设置打包路径
-        // server: {
-        //   port: 4000, // 设置服务启动端口号
-        //   open: true, // 设置服务启动时是否自动打开浏览器
-        //   cors: true, // 允许跨域
+        server: {
+            open: true
 
-        //   // 设置代理，根据我们项目实际情况配置
-        //   proxy: {
-        //     '/api': {
-        //       target: 'http://127.0.0.1:7001',
-        //       changeOrigin: true,
-        //       secure: false,
-        //       rewrite: (path) => path.replace('/api/', '/')
-        //     }
-        //   }
-        // }
+            // // 设置代理，根据我们项目实际情况配置
+            // proxy: {
+            //     '/api': {
+            //         target: 'http://127.0.0.1:7001',
+            //         changeOrigin: true,
+            //         secure: false,
+            //         rewrite: (path) => path.replace('/api/', '/')
+            //     }
+            // }
+        }
     })
 }
