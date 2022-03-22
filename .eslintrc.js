@@ -1,3 +1,9 @@
+/*
+ * :Author: June
+ * :Date: 2022-03-07 02:12:16
+ * :LastEditTime: 2022-03-22 17:01:22
+ * :Description:
+ */
 module.exports = {
     env: {
         browser: true,
@@ -26,6 +32,7 @@ module.exports = {
         'no-param-reassign': 0, // 进制给参数重新赋值
         'no-dupe-keys': 1, // 禁止对象字面量中出现重复的 key 0 1 = warning 2 = error
         'no-shadow': 1, // 外部作用域中的变量不能与它所包含的作用域中的变量或形参同名
+        'no-unused-expressions': 0,
         'prettier/prettier': 2,
         'prefer-rest-params': 0,
         'global-require': 0,

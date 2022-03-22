@@ -1,3 +1,9 @@
+/*
+ * :Author: June
+ * :Date: 2022-03-07 02:12:16
+ * :LastEditTime: 2022-03-22 16:38:14
+ * :Description:
+ */
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Layout from '@/layout/index.vue'
 
@@ -85,6 +91,24 @@ export const constantRoutes = [
                 component: () => import('@/pages/menu/menu2/index.vue'),
                 name: 'Menu2',
                 meta: { title: '菜单-nocache', noCache: true }
+            }
+        ]
+    },
+    {
+        path: '/webrtc',
+        component: Layout,
+        redirect: '/index',
+        children: [
+            {
+                path: 'index',
+                name: 'WebRTC',
+                component: () => import('@/pages/webrtc/index.vue'),
+                meta: {
+                    title: 'webrtc测试',
+                    affix: true,
+                    noCache: true,
+                    icon: 'test'
+                }
             }
         ]
     }
