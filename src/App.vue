@@ -1,3 +1,9 @@
+<!--
+ * :Author: June
+ * :Date: 2022-03-07 02:12:16
+ * :LastEditTime: 2022-03-22 13:41:05
+ * :Description:
+-->
 <template>
     <el-config-provider>
         <router-view />
@@ -6,4 +12,5 @@
 
 <script>
 document.title = import.meta.env.VITE_APP_TITLE
+console.log(1)
 </script>
