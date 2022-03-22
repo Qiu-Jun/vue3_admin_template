@@ -1,3 +1,9 @@
+/*
+ * :Author: June
+ * :Date: 2022-03-07 02:12:16
+ * :LastEditTime: 2022-03-22 13:18:56
+ * :Description:
+ */
 import { defineConfig, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import path from 'path'
@@ -50,7 +56,8 @@ export default ({ mode }) => {
                 sass: {
                     implementation: require('sass')
                 }
-            }
+            },
+            postcss: {}
         },
         base: './' // 设置打包路径
         // server: {
