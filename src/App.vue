@@ -1,7 +1,7 @@
 <!--
  * :Author: June
  * :Date: 2022-03-07 02:12:16
- * :LastEditTime: 2022-03-22 13:44:22
+ * :LastEditTime: 2022-03-22 13:47:33
  * :Description:
 -->
 <template>
@@ -12,5 +12,5 @@
 
 <script>
 document.title = import.meta.env.VITE_APP_TITLE
-console.log(11)
+console.log(111)
 </script>
