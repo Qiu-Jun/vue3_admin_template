@@ -1,10 +1,9 @@
 /*
  * :Author: June
- * :Date: 2022-03-15 00:11:14
- * :LastEditTime: 2022-03-16 15:01:22
+ * :Date: 2022-03-22 13:54:12
+ * :LastEditTime: 2022-03-22 13:54:13
  * :Description:
  */
-
 module.exports = {
     '*.{js,jsx,ts,tsx}': ['prettier --write'],
     '{!(package)*.json,*.code-snippets,.!(browserslist)*rc}': [

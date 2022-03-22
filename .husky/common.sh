@@ -1,3 +1,9 @@
+/*
+ * :Author: June
+ * :Date: 2022-03-22 13:53:37
+ * :LastEditTime: 2022-03-22 13:53:44
+ * :Description:
+ */
 #!/bin/sh
 command_exists () {
   command -v "$1" >/dev/null 2>&1
