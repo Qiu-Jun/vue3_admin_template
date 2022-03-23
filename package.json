@@ -18,10 +18,10 @@
         "element-plus": "^2.0.4",
         "js-cookie": "^3.0.1",
         "normalize.css": "^8.0.1",
+        "pinia": "^2.0.12",
         "screenfull": "^6.0.1",
         "vue": "^3.2.25",
-        "vue-router": "^4.0.12",
-        "vuex": "^4.0.2"
+        "vue-router": "^4.0.12"
     },
     "devDependencies": {
         "@commitlint/cli": "^16.2.3",

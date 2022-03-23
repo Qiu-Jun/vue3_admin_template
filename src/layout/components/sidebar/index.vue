@@ -1,4 +1,9 @@
-/* eslint-disable import/no-unresolved */
+<!--
+ * :Author: June
+ * :Date: 2022-03-07 02:12:16
+ * :LastEditTime: 2022-03-23 22:09:36
+ * :Description:
+-->
 <template>
     <div class="app-wrapper" :class="{ 'has-logo': showLogo }">
         <logo v-if="showLogo" :collapse="!opened" />
@@ -30,7 +35,9 @@
 <script>
 import { computed, defineComponent, ref, toRef } from 'vue'
 import { useRoute } from 'vue-router'
-import { useStore } from 'vuex'
+import useApp from '@/store/modules/app'
+import usePermission from '@/store/modules/permission'
+import useSettings from '@/store/modules/settings'
 import sidebarItem from './sidebarItem.vue'
 import Logo from './logo.vue'
 
@@ -41,10 +48,12 @@ export default defineComponent({
         Logo
     },
     setup() {
-        const store = useStore()
-        const opened = toRef(store.getters.sidebar, 'opened')
+        const app = useApp()
+        const opened = toRef(app.sidebar, 'opened')
 
-        const routes = computed(() => store.state.permission.routes)
+        const permission = usePermission()
+        const routes = computed(() => permission.routes)
+
         // 刷新页面时 高亮当前路由
         const activeMenu = ref('/dashboard')
         const route = useRoute()
@@ -52,7 +61,8 @@ export default defineComponent({
         activeMenu.value = path
 
         // 后面有空处理
-        const showLogo = computed(() => store.state.settings.sidebarLogo)
+        const settings = useSettings()
+        const showLogo = computed(() => settings.sidebarLogo)
 
         return {
             opened,

@@ -1,4 +1,11 @@
+/*
+ * :Author: June
+ * :Date: 2022-03-07 02:12:16
+ * :LastEditTime: 2022-03-23 22:22:14
+ * :Description:
+ */
 import { constantRoutes } from '@/router/index.js'
+import { defineStore } from 'pinia'
 
 const asyncRoutes = ''
 /**
@@ -32,37 +39,29 @@ export function filterAsyncRoutes(routes, roles) {
     return res
 }
 
-const state = {
-    routes: [...constantRoutes],
-    addRoutes: []
-}
+const usePermission = defineStore({
+    id: 'permission',
+    state: () => ({
+        routes: [...constantRoutes],
+        addRoutes: []
+    }),
 
-const mutations = {
-    SET_ROUTES: (state, routes) => {
-        state.addRoutes = routes
-        state.routes = constantRoutes.concat(routes)
+    actions: {
+        generateRoutes(roles) {
+            return new Promise((resolve) => {
+                let accessedRoutes
+                if (roles.includes('admin')) {
+                    accessedRoutes = asyncRoutes || []
+                } else {
+                    // 测试
+                    accessedRoutes = filterAsyncRoutes(constantRoutes, roles)
+                }
+                this.addRoutes = accessedRoutes
+                this.routes = constantRoutes.concat(accessedRoutes)
+                resolve(accessedRoutes)
+            })
+        }
     }
-}
+})
 
-const actions = {
-    generateRoutes({ commit }, roles) {
-        return new Promise((resolve) => {
-            let accessedRoutes
-            if (roles.includes('admin')) {
-                accessedRoutes = asyncRoutes || []
-            } else {
-                // 测试
-                accessedRoutes = filterAsyncRoutes(constantRoutes, roles)
-            }
-            commit('SET_ROUTES', accessedRoutes)
-            resolve(accessedRoutes)
-        })
-    }
-}
-
-export default {
-    namespaced: true,
-    state,
-    mutations,
-    actions
-}
+export default usePermission

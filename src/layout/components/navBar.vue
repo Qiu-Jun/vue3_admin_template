@@ -53,7 +53,7 @@ import { defineComponent, ref, toRef } from 'vue'
 import hamburger from '@/components/hamburger/index.vue'
 import breadcrumb from '@/components/breadcrumb/index.vue'
 import screenfull from '@/components/screenfull/index.vue'
-import { useStore } from 'vuex'
+import useApp from '@/store/modules/app'
 import { debounce } from '@/utils/common'
 
 export default defineComponent({
@@ -64,18 +64,21 @@ export default defineComponent({
         screenfull
     },
     setup() {
-        const store = useStore()
-        const opened = toRef(store.getters.sidebar, 'opened')
-        const device = toRef(store.getters, 'device')
+        const app = useApp()
+        const opened = toRef(app.sidebar, 'opened')
+        const device = toRef(app, 'device')
+        // const opened = toRef(store.getters.sidebar, 'opened')
+        // const device = toRef(store.getters, 'device')
         const toggleSideBar = debounce(() => {
-            store.dispatch('app/toggleSideBar')
+            // store.dispatch('app/toggleSideBar')
+            app.toggleSideBar()
         }, 250)
 
         const handleSettings = debounce(() => {
-            store.dispatch('settings/changeSetting', {
-                key: 'showSettings',
-                value: true
-            })
+            // store.dispatch('settings/changeSetting', {
+            //     key: 'showSettings',
+            //     value: true
+            // })
         }, 250)
         const avatar = ref(null)
 

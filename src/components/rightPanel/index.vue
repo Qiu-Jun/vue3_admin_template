@@ -19,7 +19,7 @@ import {
     ref,
     watch
 } from 'vue'
-import { useStore } from 'vuex'
+import useSettings from '@/store/modules/settings'
 
 export default defineComponent({
     name: 'rightPanel',
@@ -30,9 +30,9 @@ export default defineComponent({
         }
     },
     setup(props) {
-        const store = useStore()
+        const settings = useSettings()
         const rightPanel = ref(null)
-        const show = computed(() => store.state.settings.showSettings)
+        const show = computed(() => settings.showSettings)
 
         const insertToBody = () => {
             if (!rightPanel.value) return

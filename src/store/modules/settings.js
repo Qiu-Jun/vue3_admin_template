@@ -1,32 +1,31 @@
+/*
+ * :Author: June
+ * :Date: 2022-03-14 15:42:05
+ * :LastEditTime: 2022-03-23 22:21:59
+ * :Description:
+ */
 import defaultSettings from '@/config/settings/app'
+import { defineStore } from 'pinia'
 
 const { showSettings, tagsView, fixedHeader, sidebarLogo } = defaultSettings
 
-const state = {
-    showSettings,
-    tagsView,
-    fixedHeader,
-    sidebarLogo
-}
+const useSettings = defineStore({
+    id: 'settings',
 
-const mutations = {
-    CHANGE_SETTING: (state, { key, value }) => {
-        // eslint-disable-next-line no-prototype-builtins
-        if (state.hasOwnProperty(key)) {
-            state[key] = value
+    state: () => ({
+        showSettings,
+        tagsView,
+        fixedHeader,
+        sidebarLogo
+    }),
+
+    actions: {
+        changeSetting({ key, value }) {
+            if (this[key]) {
+                this[key] = value
+            }
         }
     }
-}
+})
 
-const actions = {
-    changeSetting({ commit }, data) {
-        commit('CHANGE_SETTING', data)
-    }
-}
-
-export default {
-    namespaced: true,
-    state,
-    mutations,
-    actions
-}
+export default useSettings

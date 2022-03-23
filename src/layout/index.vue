@@ -1,3 +1,9 @@
+<!--
+ * :Author: June
+ * :Date: 2022-03-07 02:12:16
+ * :LastEditTime: 2022-03-23 22:00:00
+ * :Description:
+-->
 <template>
     <div :class="classObj" class="app-wrapper clearfix">
         <side-bar class="sidebar-container" />
@@ -17,8 +23,9 @@
 
 <script>
 import { defineComponent, computed, toRefs } from 'vue'
-import { useStore } from 'vuex'
 import rightPanel from '@/components/rightPanel/index.vue'
+import useApp from '@/store/modules/app'
+import useSettings from '@/store/modules/settings'
 import sideBar from './components/sidebar/index.vue'
 import navBar from './components/navBar.vue'
 import settings from './components/settings/index.vue'
@@ -36,20 +43,21 @@ export default defineComponent({
         settings
     },
     setup() {
-        const store = useStore()
-        const { sidebar, device } = store.getters
+        const app = useApp()
         const classObj = computed(() => ({
-            hideSidebar: !sidebar.opened,
-            openSidebar: sidebar.opened,
-            withoutAnimation: sidebar.withoutAnimation,
-            mobile: device === 'mobile'
+            hideSidebar: !app.sidebar.opened,
+            openSidebar: app.sidebar.opened,
+            withoutAnimation: app.sidebar.withoutAnimation,
+            mobile: app.device === 'mobile'
         }))
 
+        const settingsStore = useSettings()
         const {
             showSettings,
             fixedHeader,
             tagsView: needTagsView
-        } = toRefs(store.state.settings)
+        } = toRefs(settingsStore)
+
         return {
             classObj,
             showSettings,

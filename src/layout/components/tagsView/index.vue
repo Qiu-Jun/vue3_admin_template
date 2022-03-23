@@ -37,10 +37,11 @@
 
 <script>
 import { computed, defineComponent, nextTick, onMounted, watch } from 'vue'
-import { useStore } from 'vuex'
 import { useRoute, useRouter } from 'vue-router'
 import { debounce } from '@/utils/common'
 import path from 'path-browserify'
+import useTagsViews from '@/store/modules/tagsView'
+import usePermission from '@/store/modules/permission'
 import scrollPanel from './scrollPanel.vue'
 
 function filterAffixTags(routes, basePath = '/') {
@@ -71,18 +72,20 @@ export default defineComponent({
     setup() {
         const route = useRoute()
         const router = useRouter()
-        const store = useStore()
+        const tagsViews = useTagsViews()
 
         const selectedTag = computed(() => route)
-        const visitedViews = computed(() => store.getters.visitedViews)
-        const routes = computed(() => store.state.permission.routes)
+        const visitedViews = computed(() => tagsViews.visitedViews)
+
+        const permission = usePermission()
+        const routes = computed(() => permission.routes)
 
         let affixTags = []
         const initTags = () => {
             affixTags = filterAffixTags(routes.value)
             for (const tag of affixTags) {
                 if (tag.name) {
-                    store.dispatch('tagsView/addVisitedView', tag)
+                    tagsViews.addVisitedView(tag)
                 }
             }
         }
@@ -90,7 +93,7 @@ export default defineComponent({
         const addTags = () => {
             const { name } = route
             if (name) {
-                store.dispatch('tagsView/addView', route)
+                tagsViews.addView(route)
             }
             return false
         }
@@ -123,7 +126,7 @@ export default defineComponent({
         }
         // 关闭Tag
         const closeSelectedTag = debounce((view) => {
-            store.dispatch('tagsView/delView', view).then((res) => {
+            tagsViews.delView(view).then((res) => {
                 const visitViews = res.visitedViews
                 if (isActive(view)) {
                     toLastView(visitViews, view)
@@ -133,7 +136,7 @@ export default defineComponent({
 
         // 刷新Tag
         const refreshSelectedTag = debounce((tag) => {
-            store.dispatch('tagsView/delCachedView', tag).then(() => {
+            tagsViews.delCachedView(tag).then(() => {
                 const { fullPath } = tag
                 nextTick(() => {
                     router.replace({
@@ -145,12 +148,12 @@ export default defineComponent({
 
         // 关闭其他
         const closeOthersTags = () => {
-            store.dispatch('tagsView/delOthersViews', selectedTag.value)
+            tagsViews.delOthersViews(selectedTag.value)
         }
 
         // 关闭全部
         const closeAllTags = (tag) => {
-            store.dispatch('tagsView/delAllViews').then((res) => {
+            tagsViews.delAllViews().then((res) => {
                 const visitViews = res.visitedViews
                 if (affixTags.some((v) => v.path === tag.path)) return
                 toLastView(visitViews, tag)

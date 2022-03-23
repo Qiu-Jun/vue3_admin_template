@@ -1,7 +1,7 @@
 <!--
  * :Author: June
  * :Date: 2022-03-07 02:12:16
- * :LastEditTime: 2022-03-23 14:01:59
+ * :LastEditTime: 2022-03-23 22:26:35
  * :Description:
 -->
 <template>
@@ -18,14 +18,13 @@
 
 <script>
 import { computed, defineComponent } from 'vue'
-import { useStore } from 'vuex'
+import useTagsViews from '@/store/modules/tagsView'
 
 export default defineComponent({
     name: 'appMain',
     setup() {
-        const store = useStore()
-        const cachedViews = computed(() => store.state.tagsView.cachedViews)
-
+        const tagsViews = useTagsViews()
+        const cachedViews = computed(() => tagsViews.cachedViews)
         return {
             cachedViews
         }

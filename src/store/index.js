@@ -1,15 +1,11 @@
-import { createStore } from 'vuex'
-import getters from './getters'
+/*
+ * :Author: June
+ * :Date: 2022-03-23 20:37:08
+ * :LastEditTime: 2022-03-23 22:34:33
+ * :Description:
+ */
+import { createPinia } from 'pinia'
 
-const modulesFiles = import.meta.globEager('./modules/*.js')
-const modules = {}
-for (const key in modulesFiles) {
-    if (Object.prototype.hasOwnProperty.call(modulesFiles, key)) {
-        modules[key.replace(/(\.\/modules\/|\.js)/g, '')] = modulesFiles[key].default
-    }
-}
+const store = createPinia()
 
-export default createStore({
-    modules,
-    getters
-})
+export default store

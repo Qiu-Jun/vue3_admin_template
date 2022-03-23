@@ -27,18 +27,18 @@
 
 <script>
 import { computed, defineComponent } from 'vue'
-import { useStore } from 'vuex'
+import useSettings from '@/store/modules/settings'
 
 export default defineComponent({
     name: 'settings',
     setup() {
-        const store = useStore()
+        const settings = useSettings()
         const tagsView = computed({
             get() {
-                return store.state.settings.tagsView
+                return settings.tagsView
             },
             set(val) {
-                store.dispatch('settings/changeSetting', {
+                settings.changeSetting({
                     key: 'tagsView',
                     value: val
                 })
@@ -47,10 +47,10 @@ export default defineComponent({
 
         const fixedHeader = computed({
             get() {
-                return store.state.settings.fixedHeader
+                return settings.fixedHeader
             },
             set(val) {
-                store.dispatch('settings/changeSetting', {
+                settings.changeSetting({
                     key: 'fixedHeader',
                     value: val
                 })
@@ -59,10 +59,10 @@ export default defineComponent({
 
         const sidebarLogo = computed({
             get() {
-                return store.state.settings.sidebarLogo
+                return settings.sidebarLogo
             },
             set(val) {
-                store.dispatch('settings/changeSetting', {
+                settings.changeSetting({
                     key: 'sidebarLogo',
                     value: val
                 })
@@ -70,7 +70,7 @@ export default defineComponent({
         })
 
         const handleClose = () => {
-            store.dispatch('settings/changeSetting', {
+            settings.changeSetting('settings/changeSetting', {
                 key: 'showSettings',
                 value: false
             })
