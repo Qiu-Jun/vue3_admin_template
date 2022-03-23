@@ -1,7 +1,7 @@
 <!--
  * :Author: June
  * :Date: 2022-03-07 02:12:16
- * :LastEditTime: 2022-03-23 12:54:05
+ * :LastEditTime: 2022-03-23 13:53:59
  * :Description:
 -->
 <template>
@@ -9,7 +9,3 @@
         <router-view />
     </el-config-provider>
 </template>
-
-<script>
-console.log('测试')
-</script>
