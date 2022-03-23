@@ -1,7 +1,7 @@
 /*
  * :Author: June
  * :Date: 2022-03-07 02:12:16
- * :LastEditTime: 2022-03-22 18:15:21
+ * :LastEditTime: 2022-03-23 12:57:37
  * :Description:
  */
 import { defineConfig, loadEnv } from 'vite'
@@ -13,6 +13,7 @@ import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons' // svg
 import { createHtmlPlugin } from 'vite-plugin-html'
 import autoprefixer from 'autoprefixer'
+import viteCompression from 'vite-plugin-compression'
 
 export default ({ mode }) => {
     const envData = loadEnv(mode, process.cwd())
@@ -41,6 +42,14 @@ export default ({ mode }) => {
                         title: envData.VITE_APP_TITLE
                     }
                 }
+            }),
+            // gzip压缩 生产环境生成 .gz 文件
+            viteCompression({
+                verbose: true,
+                disable: false,
+                threshold: 10240,
+                algorithm: 'gzip',
+                ext: '.gz'
             })
         ],
         resolve: {
@@ -75,6 +84,16 @@ export default ({ mode }) => {
             //         rewrite: (path) => path.replace('/api/', '/')
             //     }
             // }
+        },
+        build: {
+            // 去除 console debugger
+            minify: 'terser',
+            terserOptions: {
+                compress: {
+                    drop_console: true,
+                    drop_debugger: true
+                }
+            }
         }
     })
 }
