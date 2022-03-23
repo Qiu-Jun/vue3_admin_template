@@ -35,7 +35,11 @@
                     />
 
                     <span class="show-pwd" @click="showPwd">
-                        <svg-icon :name="passwordType === 'password' ? 'eye' : 'eye-open'" />
+                        <svg-icon
+                            :name="
+                                passwordType === 'password' ? 'eye' : 'eye-open'
+                            "
+                        />
                     </span>
                 </el-form-item>
             </el-tooltip>
@@ -83,7 +87,8 @@ export default defineComponent({
 
         const checkCapslock = debounce((e) => {
             const { key } = e
-            capsTooltip.value = key && key.length === 1 && key >= 'A' && key <= 'Z'
+            capsTooltip.value =
+                key && key.length === 1 && key >= 'A' && key <= 'Z'
         }, 300)
 
         // 登录

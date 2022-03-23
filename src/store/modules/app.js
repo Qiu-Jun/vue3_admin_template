@@ -1,7 +1,7 @@
 /*
  * :Author: June
  * :Date: 2022-03-07 02:12:16
- * :LastEditTime: 2022-03-23 22:34:56
+ * :LastEditTime: 2022-03-24 00:00:34
  * :Description:
  */
 import Cookies from 'js-cookie'
@@ -21,10 +21,9 @@ const useApp = defineStore({
 
     actions: {
         toggleSideBar() {
-            const oldOpemd = this.sidebar.opened
-            this.sidebar.opened = !oldOpemd
+            this.sidebar.opened = !this.sidebar.opened
             this.sidebar.withoutAnimation = false
-            if (oldOpemd) {
+            if (this.sidebar.opened) {
                 Cookies.set('sidebarStatus', 1)
             } else {
                 Cookies.set('sidebarStatus', 0)

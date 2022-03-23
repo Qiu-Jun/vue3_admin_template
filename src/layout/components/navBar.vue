@@ -55,6 +55,7 @@ import breadcrumb from '@/components/breadcrumb/index.vue'
 import screenfull from '@/components/screenfull/index.vue'
 import useApp from '@/store/modules/app'
 import { debounce } from '@/utils/common'
+import useSettings from '@/store/modules/settings'
 
 export default defineComponent({
     name: 'sideNavbar',
@@ -67,18 +68,17 @@ export default defineComponent({
         const app = useApp()
         const opened = toRef(app.sidebar, 'opened')
         const device = toRef(app, 'device')
-        // const opened = toRef(store.getters.sidebar, 'opened')
-        // const device = toRef(store.getters, 'device')
+
         const toggleSideBar = debounce(() => {
-            // store.dispatch('app/toggleSideBar')
             app.toggleSideBar()
         }, 250)
 
+        const settings = useSettings()
         const handleSettings = debounce(() => {
-            // store.dispatch('settings/changeSetting', {
-            //     key: 'showSettings',
-            //     value: true
-            // })
+            settings.changeSetting({
+                key: 'showSettings',
+                value: true
+            })
         }, 250)
         const avatar = ref(null)
 
