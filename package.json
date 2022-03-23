@@ -6,7 +6,10 @@
         "dev": "vite",
         "build": "vite build",
         "build:test": "cross-env vite build --mode test",
-        "preview": "vite preview"
+        "preview": "vite preview",
+        "prettier": "prettier --write .",
+        "prepare": "husky install",
+        "lint:lint-staged": "lint-staged -c ./.husky/lintstagedrc.js"
     },
     "dependencies": {
         "@element-plus/icons-svg": "^1.0.1",
@@ -22,6 +25,8 @@
         "vuex": "^4.0.2"
     },
     "devDependencies": {
+        "@commitlint/cli": "^16.2.3",
+        "@commitlint/config-conventional": "^16.2.1",
         "@vitejs/plugin-vue": "^2.2.0",
         "autoprefixer": "^10.4.4",
         "cross-env": "^7.0.3",
@@ -32,7 +37,8 @@
         "eslint-plugin-import": "^2.25.2",
         "eslint-plugin-prettier": "^4.0.0",
         "eslint-plugin-vue": "^8.4.1",
-        "lint-staged": "^12.3.5",
+        "husky": "^7.0.4",
+        "lint-staged": "^12.3.7",
         "mockjs": "^1.1.0",
         "path-browserify": "^1.0.1",
         "prettier": "^2.5.1",
