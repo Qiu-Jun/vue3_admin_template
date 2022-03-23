@@ -4,6 +4,7 @@
 
 -   [gitee](https://gitee.com/juneqiu/vue3_admin_template)
 -   [github](https://github.com/QJune/vue3_admin_template)
+-   [ts 版 github](https://github.com/QJune/vite_admin_ts_template.git)
 
 ## 使用
 
