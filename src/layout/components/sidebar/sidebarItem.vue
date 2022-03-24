@@ -1,49 +1,55 @@
-<template v-if="!item.hidden">
-    <template
-        v-if="
-            hasOneShowingChild(item, item.children) &&
-            (!onlyOneChild.state.children ||
-                onlyOneChild.state.noShowingChildren)
-        "
-    >
-        <!-- 只有一项或者无 -->
-        <side-link
-            v-if="onlyOneChild.state.meta"
-            :to="resolvePath(onlyOneChild.state.path)"
+<template>
+    <template v-if="!item.hidden">
+        <template
+            v-if="
+                hasOneShowingChild(item, item.children) &&
+                (!onlyOneChild.state.children ||
+                    onlyOneChild.state.noShowingChildren)
+            "
         >
-            <el-menu-item
-                class="submenu-title-noDropdown"
-                :index="resolvePath(onlyOneChild.state.path)"
+            <!-- 只有一项或者无 -->
+            <side-link
+                v-if="onlyOneChild.state.meta"
+                :to="resolvePath(onlyOneChild.state.path)"
             >
-                <svg-icon
-                    v-if="
-                        onlyOneChild.state.meta.icon ||
-                        (item.meta && item.meta.icon)
-                    "
-                    :name="
-                        onlyOneChild.state.meta.icon ||
-                        (item.meta && item.meta.icon)
-                    "
-                />
-                <span>{{ onlyOneChild.state.meta.title }}</span>
-            </el-menu-item>
-        </side-link>
-    </template>
-
-    <el-sub-menu v-else :index="resolvePath(item.path)" popper-append-to-body>
-        <template #title>
-            <div v-if="item.meta" class="sub-el-icon">
-                <svg-icon v-if="item.meta.icon" :name="item.meta.icon" />
-                <span v-show="!collapse">{{ item.meta.title }}</span>
-            </div>
+                <el-menu-item
+                    class="submenu-title-noDropdown"
+                    :index="resolvePath(onlyOneChild.state.path)"
+                >
+                    <svg-icon
+                        v-if="
+                            onlyOneChild.state.meta.icon ||
+                            (item.meta && item.meta.icon)
+                        "
+                        :name="
+                            onlyOneChild.state.meta.icon ||
+                            (item.meta && item.meta.icon)
+                        "
+                    />
+                    <span>{{ onlyOneChild.state.meta.title }}</span>
+                </el-menu-item>
+            </side-link>
         </template>
-        <sidebar-item
-            v-for="child in item.children"
-            :key="child.path"
-            :item="child"
-            :base-path="resolvePath(child.path)"
-        />
-    </el-sub-menu>
+
+        <el-sub-menu
+            v-else
+            :index="resolvePath(item.path)"
+            popper-append-to-body
+        >
+            <template #title>
+                <div v-if="item.meta" class="sub-el-icon">
+                    <svg-icon v-if="item.meta.icon" :name="item.meta.icon" />
+                    <span v-show="!collapse">{{ item.meta.title }}</span>
+                </div>
+            </template>
+            <sidebar-item
+                v-for="child in item.children"
+                :key="child.path"
+                :item="child"
+                :base-path="resolvePath(child.path)"
+            />
+        </el-sub-menu>
+    </template>
 </template>
 
 <script>
@@ -58,10 +64,6 @@ export default defineComponent({
         item: {
             type: Object,
             required: true
-        },
-        isNest: {
-            type: Boolean,
-            default: false
         },
         collapse: {
             type: Boolean,
