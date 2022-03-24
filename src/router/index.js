@@ -1,13 +1,27 @@
 /*
  * :Author: June
  * :Date: 2022-03-07 02:12:16
- * :LastEditTime: 2022-03-22 16:38:14
+ * :LastEditTime: 2022-03-24 17:37:11
  * :Description:
  */
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Layout from '@/layout/index.vue'
 
 export const constantRoutes = [
+    {
+        path: '/redirect',
+        component: Layout,
+        hidden: true,
+        children: [
+            {
+                path: '/redirect/:path(.*)',
+                component: () => import('@/pages/redirect/index.vue'),
+                meta: {
+                    noCache: true
+                }
+            }
+        ]
+    },
     {
         path: '/',
         component: Layout,

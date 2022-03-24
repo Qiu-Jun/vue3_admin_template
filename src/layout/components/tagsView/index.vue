@@ -140,7 +140,7 @@ export default defineComponent({
                 const { fullPath } = tag
                 nextTick(() => {
                     router.replace({
-                        path: fullPath
+                        path: `/redirect${fullPath}`
                     })
                 })
             })
