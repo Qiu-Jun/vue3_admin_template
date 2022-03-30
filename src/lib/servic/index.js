@@ -1,3 +1,9 @@
+/*
+ * :Author: June
+ * :Date: 2022-03-07 02:12:16
+ * :LastEditTime: 2022-03-30 02:01:31
+ * :Description:
+ */
 import axios from 'axios'
 
 const service = axios.create({

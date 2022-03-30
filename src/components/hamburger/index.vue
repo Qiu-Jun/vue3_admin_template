@@ -1,3 +1,9 @@
+<!--
+ * :Author: June
+ * :Date: 2022-03-07 02:12:16
+ * :LastEditTime: 2022-03-29 23:55:47
+ * :Description:
+-->
 <template>
     <div style="padding: 0 15px" @click="toggleClick">
         <svg
@@ -16,8 +22,6 @@
 </template>
 
 <script setup>
-import { defineEmits, defineProps } from 'vue'
-
 defineProps({
     isActive: {
         type: Boolean,

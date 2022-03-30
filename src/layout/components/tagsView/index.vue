@@ -180,11 +180,12 @@ export default defineComponent({
     align-items: center;
     height: 34px;
     width: 100%;
+    overflow-x: hidden;
     background: #fff;
     border-bottom: 1px solid #d8dce5;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 0 3px 0 rgba(0, 0, 0, 0.04);
     .tags-view-wrapper {
-        width: 76%;
+        width: calc(100% - 200px);
         .tags-view-item {
             display: inline-block;
             position: relative;
@@ -242,12 +243,14 @@ export default defineComponent({
         }
     }
     .tag-view-menu {
-        width: 24%;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        width: 200px;
         list-style: none;
         margin: 0;
         overflow: hidden;
         li {
-            display: inline-block;
             position: relative;
             cursor: pointer;
             height: 26px;

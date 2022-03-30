@@ -1,5 +1,5 @@
 <template>
-    <div ref="rightPanel" :class="{ show }" class="rightPanel-container">
+    <div ref="rightPanelRef" :class="{ show }" class="rightPanel-container">
         <div class="rightPanel-background" />
         <div class="rightPanel">
             <div class="rightPanel-items">
@@ -31,13 +31,13 @@ export default defineComponent({
     },
     setup(props) {
         const settings = useSettings()
-        const rightPanel = ref(null)
+        const rightPanelRef = ref(null)
         const show = computed(() => settings.showSettings)
 
         const insertToBody = () => {
-            if (!rightPanel.value) return
+            if (!rightPanelRef.value) return
             const body = document.querySelector('body')
-            body.insertBefore(rightPanel, body.firstChild)
+            body.insertBefore(rightPanelRef.value, body.firstChild)
         }
         const closeSidebar = (evt) => {
             const parent = evt.target.closest('.rightPanel')
@@ -64,11 +64,12 @@ export default defineComponent({
         onMounted(insertToBody)
 
         onBeforeUnmount(() => {
-            rightPanel.value.remove()
+            rightPanelRef.value.remove()
         })
 
         return {
-            show
+            show,
+            rightPanelRef
         }
     }
 })

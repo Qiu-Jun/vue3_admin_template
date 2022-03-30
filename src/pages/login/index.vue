@@ -57,9 +57,8 @@
 <script>
 import { defineComponent, reactive, ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { userLogin } from '@/apis/user'
 import { debounce } from '@/utils/common'
-import { setToken } from '@/utils/auth'
+import useUser from '@/store/modules/user'
 
 export default defineComponent({
     name: 'login',
@@ -67,6 +66,7 @@ export default defineComponent({
     setup() {
         const router = useRouter()
         const route = useRoute()
+        const userStore = useUser()
         const capsTooltip = ref(false)
         const passwordType = ref('password')
 
@@ -93,13 +93,11 @@ export default defineComponent({
 
         // 登录
         const handleLogin = debounce(() => {
-            userLogin(loginForm)
-                .then(({ code, data }) => {
-                    if (code === 200) {
-                        setToken(data)
-                        const { query } = route
-                        router.push(query.redirect || '/')
-                    }
+            userStore
+                .login(loginForm)
+                .then(() => {
+                    const { query } = route
+                    router.push(query.redirect || '/')
                 })
                 .catch((err) => console.log(err))
         }, 250)

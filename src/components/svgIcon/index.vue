@@ -1,10 +1,16 @@
+<!--
+ * :Author: June
+ * :Date: 2022-03-07 02:12:16
+ * :LastEditTime: 2022-03-30 00:02:43
+ * :Description:
+-->
 <template>
     <svg :class="svgClass" aria-hidden="true">
         <use :xlink:href="iconName" :fill="color" />
     </svg>
 </template>
 <script setup>
-import { computed, defineProps } from 'vue'
+import { computed } from 'vue'
 
 const props = defineProps({
     name: {

@@ -1,13 +1,12 @@
 /*
  * :Author: June
  * :Date: 2022-03-07 02:12:16
- * :LastEditTime: 2022-03-23 22:22:14
+ * :LastEditTime: 2022-03-30 15:31:56
  * :Description:
  */
-import { constantRoutes } from '@/router/index.js'
+import { constantRoutes, asyncRoutes } from '@/router/index.js'
 import { defineStore } from 'pinia'
 
-const asyncRoutes = ''
 /**
  * @param roles
  * @param route
@@ -54,7 +53,7 @@ const usePermission = defineStore({
                     accessedRoutes = asyncRoutes || []
                 } else {
                     // 测试
-                    accessedRoutes = filterAsyncRoutes(constantRoutes, roles)
+                    accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
                 }
                 this.addRoutes = accessedRoutes
                 this.routes = constantRoutes.concat(accessedRoutes)

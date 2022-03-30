@@ -70,7 +70,7 @@ export default defineComponent({
         })
 
         const handleClose = () => {
-            settings.changeSetting('settings/changeSetting', {
+            settings.changeSetting({
                 key: 'showSettings',
                 value: false
             })

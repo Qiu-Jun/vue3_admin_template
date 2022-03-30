@@ -40,7 +40,9 @@
                         <el-dropdown-item @click.stop="handleSettings">
                             设置
                         </el-dropdown-item>
-                        <el-dropdown-item> 退出登录 </el-dropdown-item>
+                        <el-dropdown-item @click="handleLogout">
+                            退出登录
+                        </el-dropdown-item>
                     </el-dropdown-menu>
                 </template>
             </el-dropdown>
@@ -56,6 +58,7 @@ import screenfull from '@/components/screenfull/index.vue'
 import useApp from '@/store/modules/app'
 import { debounce } from '@/utils/common'
 import useSettings from '@/store/modules/settings'
+import useUser from '@/store/modules/user'
 
 export default defineComponent({
     name: 'sideNavbar',
@@ -82,12 +85,18 @@ export default defineComponent({
         }, 250)
         const avatar = ref(null)
 
+        const userStore = useUser()
+        const handleLogout = debounce(() => {
+            userStore.logout()
+        }, 300)
+
         return {
             device,
             opened,
             toggleSideBar,
             avatar,
-            handleSettings
+            handleSettings,
+            handleLogout
         }
     }
 })

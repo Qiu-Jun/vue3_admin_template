@@ -1,7 +1,7 @@
 /*
  * :Author: June
  * :Date: 2022-03-07 02:12:16
- * :LastEditTime: 2022-03-24 21:20:45
+ * :LastEditTime: 2022-03-30 15:32:16
  * :Description:
  */
 import { createRouter, createWebHashHistory } from 'vue-router'
@@ -21,6 +21,11 @@ export const constantRoutes = [
                 }
             }
         ]
+    },
+    {
+        path: '/login',
+        name: 'login',
+        component: () => import('@/pages/login/index.vue')
     },
     {
         path: '/',
@@ -107,11 +112,17 @@ export const constantRoutes = [
                 meta: { title: '菜单-nocache', noCache: true }
             }
         ]
-    },
+    }
+]
+
+export const asyncRoutes = [
     {
         path: '/webrtc',
         component: Layout,
         redirect: '/index',
+        meta: {
+            roles: ['admin']
+        },
         children: [
             {
                 path: 'index',
@@ -121,6 +132,7 @@ export const constantRoutes = [
                     title: 'webrtc测试',
                     affix: true,
                     noCache: true,
+                    roles: ['admin'],
                     icon: 'test'
                 }
             }

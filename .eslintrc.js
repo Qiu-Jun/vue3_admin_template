@@ -1,7 +1,7 @@
 /*
  * :Author: June
  * :Date: 2022-03-07 02:12:16
- * :LastEditTime: 2022-03-22 17:01:22
+ * :LastEditTime: 2022-03-30 00:01:00
  * :Description:
  */
 module.exports = {
@@ -28,6 +28,11 @@ module.exports = {
             }
         }
     },
+    globals: {
+        // setup 无需import
+        defineProps: true,
+        defineEmits: true
+    },
     rules: {
         'no-param-reassign': 0, // 进制给参数重新赋值
         'no-dupe-keys': 1, // 禁止对象字面量中出现重复的 key 0 1 = warning 2 = error
@@ -47,6 +52,7 @@ module.exports = {
             }
         ],
         'import/no-unresolved': 0,
+        'import/order': 0,
         'vue/multi-word-component-names': 'off', // hellow-world
         'vue/no-dupe-keys': 0
     }
