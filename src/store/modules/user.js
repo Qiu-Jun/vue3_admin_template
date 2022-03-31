@@ -1,7 +1,7 @@
 /*
  * :Author: June
  * :Date: 2022-03-07 13:03:58
- * :LastEditTime: 2022-03-30 16:59:03
+ * :LastEditTime: 2022-03-30 17:18:00
  * :Description:
  */
 import { userLogin, userInfo } from '@/apis/user'
@@ -45,7 +45,7 @@ const useUser = defineStore({
             this.roles = []
             this.menus = []
             removeToken()
-            router.replace({ path: '/login' })
+            router.push({ path: '/login' })
         },
 
         getUserInfo() {
