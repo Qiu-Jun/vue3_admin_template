@@ -8,7 +8,7 @@
     <section class="app-main">
         <router-view v-slot="{ Component, route }">
             <transition name="fade-transform" mode="out-in">
-                <keep-alive :include="cachedViews" :max="10">
+                <keep-alive :include="cachedViews">
                     <component :is="Component" :key="route.fullPath" />
                 </keep-alive>
             </transition>
@@ -24,7 +24,12 @@ export default defineComponent({
     name: 'appMain',
     setup() {
         const tagsViews = useTagsViews()
-        const cachedViews = computed(() => tagsViews.cachedViews)
+        const cachedViews = computed(() => {
+            const cacheArr = tagsViews.visitedViews.filter(
+                (i) => i.meta.keepAlive
+            )
+            return cacheArr.map((i) => i.name)
+        })
         return {
             cachedViews
         }

@@ -17,7 +17,7 @@ export const constantRoutes = [
                 path: '/redirect/:path(.*)',
                 component: () => import('@/pages/redirect/index.vue'),
                 meta: {
-                    noCache: true
+                    keepAlive: true
                 }
             }
         ]
@@ -39,7 +39,8 @@ export const constantRoutes = [
                 meta: {
                     title: '控制面板',
                     affix: true,
-                    icon: 'test'
+                    icon: 'test',
+                    keepAlive: true
                 }
             }
         ]
@@ -66,7 +67,7 @@ export const constantRoutes = [
                         component: () =>
                             import('@/pages/menu/menu1/menu1-1/index.vue'),
                         name: 'Menu1-1',
-                        meta: { title: '菜单1-1' }
+                        meta: { title: '菜单1-1', keepAlive: true }
                     },
                     {
                         path: 'menu1-2',
@@ -83,7 +84,7 @@ export const constantRoutes = [
                                         '@/pages/menu/menu1/menu1-2/menu1-2-1/index.vue'
                                     ),
                                 name: 'Menu1-2-1',
-                                meta: { title: '菜单1-2-1' }
+                                meta: { title: '菜单1-2-1', keepAlive: true }
                             },
                             {
                                 path: 'menu1-2-2',
@@ -92,7 +93,7 @@ export const constantRoutes = [
                                         '@/pages/menu/menu1/menu1-2/menu1-2-2/index.vue'
                                     ),
                                 name: 'Menu1-2-2',
-                                meta: { title: '菜单1-2-2' }
+                                meta: { title: '菜单1-2-2', keepAlive: true }
                             }
                         ]
                     },
@@ -109,7 +110,7 @@ export const constantRoutes = [
                 path: 'menu2',
                 component: () => import('@/pages/menu/menu2/index.vue'),
                 name: 'Menu2',
-                meta: { title: '菜单-nocache', noCache: true }
+                meta: { title: '菜单-nocache' }
             }
         ]
     }

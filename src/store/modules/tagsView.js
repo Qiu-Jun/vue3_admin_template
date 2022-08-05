@@ -4,14 +4,12 @@ const useTagsViews = defineStore({
     id: 'tagsViews',
 
     state: () => ({
-        visitedViews: [],
-        cachedViews: []
+        visitedViews: []
     }),
 
     actions: {
         addView(view) {
             this.addVisitedView(view)
-            this.addCachedView(view)
         },
 
         addVisitedView(view) {
@@ -22,31 +20,11 @@ const useTagsViews = defineStore({
             })
         },
 
-        addCachedView(view) {
-            if (this.cachedViews.includes(view.name)) return
-            if (!view.meta.noCache) {
-                this.cachedViews.push(view.name)
-            }
-
-            // 多级缓存(将父的name也添加进去，不然会失效)
-            // if (view.meta.noCache) return
-            // const { matched } = view
-            // if (matched && matched.length > 1) {
-            //     matched.forEach((i) => {
-            //         if (i.name && !this.cachedViews.includes(i.name)) {
-            //             this.cachedViews.push(i.name)
-            //         }
-            //     })
-            // }
-        },
-
         delView(view) {
             return new Promise((resolve) => {
                 this.delVisitedView(view)
-                this.delCachedView(view)
                 resolve({
-                    visitedViews: [...this.visitedViews],
-                    cachedViews: [...this.cachedViews]
+                    visitedViews: [...this.visitedViews]
                 })
             })
         },
@@ -93,23 +71,9 @@ const useTagsViews = defineStore({
             })
         },
 
-        delOthersCachedViews(view) {
-            return new Promise((resolve) => {
-                const index = this.cachedViews.indexOf(view.name)
-                if (index > -1) {
-                    this.cachedViews = this.cachedViews.slice(index, index + 1)
-                } else {
-                    // if index = -1, there is no cached tags
-                    this.cachedViews = []
-                }
-                resolve([...this.cachedViews])
-            })
-        },
-
         delAllViews() {
             return new Promise((resolve) => {
                 this.delAllVisitedViews()
-                this.delAllCachedViews()
                 resolve({
                     visitedViews: [...this.visitedViews],
                     cachedViews: [...this.cachedViews]
@@ -125,13 +89,6 @@ const useTagsViews = defineStore({
                 )
                 this.visitedViews = affixTags
                 resolve([...this.visitedViews])
-            })
-        },
-
-        delAllCachedViews() {
-            return new Promise((resolve) => {
-                this.cachedViews = []
-                resolve([])
             })
         },
 
