@@ -1,3 +1,6 @@
+import { cloneDeep } from 'lodash-es'
+import useIsType from '@/hooks/isType'
+
 export function debounce(cb, wait = 1000, immediate = false) {
     if (!cb || typeof cb !== 'function')
         throw new TypeError('cb不能为空或cb必须是一个函数')
@@ -58,4 +61,21 @@ export function removeClass(ele, cls) {
         const reg = new RegExp(`(\\s|^)${cls}(\\s|$)`)
         ele.className = ele.className.replace(reg, ' ')
     }
+}
+
+// 数组交换位置
+export function exchangeArrPos(newIdx, oldIdx) {
+    const { judgeRef, judgeProxy } = useIsType()
+    if (
+        !this ||
+        judgeRef(this) ||
+        judgeProxy(this) ||
+        Object.prototype.toString.call(this) !== '[object Array]'
+    )
+        throw new Error('请先绑定一个f非响应式数组')
+    const cloneArr = cloneDeep(this)
+    const temp = cloneArr[oldIdx]
+    cloneArr[oldIdx] = cloneArr[newIdx]
+    cloneArr[newIdx] = temp
+    return cloneArr
 }
