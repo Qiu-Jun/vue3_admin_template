@@ -118,6 +118,26 @@ export const constantRoutes = [
 
 export const asyncRoutes = [
     {
+        path: '/dragable',
+        component: Layout,
+        redirect: '/index',
+        meta: {
+            roles: ['admin']
+        },
+        children: [
+            {
+                path: 'index',
+                name: 'dragable',
+                component: () => import('@/pages/draggable/index.vue'),
+                meta: {
+                    title: '拖曳',
+                    roles: ['admin'],
+                    icon: 'test'
+                }
+            }
+        ]
+    },
+    {
         path: '/webrtc',
         component: Layout,
         redirect: '/index',
@@ -131,7 +151,6 @@ export const asyncRoutes = [
                 component: () => import('@/pages/webrtc/index.vue'),
                 meta: {
                     title: 'webrtc测试',
-                    affix: true,
                     noCache: true,
                     roles: ['admin'],
                     icon: 'test'
