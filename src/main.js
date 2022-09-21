@@ -6,7 +6,7 @@
  */
 import { createApp } from 'vue'
 import App from './App.vue'
-import 'normalize.css/normalize.css'
+import '@/styles/reset.css'
 import '@/styles/index.scss'
 import router from './router'
 import store from './store/index'

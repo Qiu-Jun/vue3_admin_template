@@ -9,8 +9,9 @@
 </template>
 
 <script>
-import { defineComponent, onMounted } from 'vue'
+import { defineComponent, onMounted, reactive, toRaw } from 'vue'
 import { userInfo } from '@/apis/user.js'
+import { exchangeArrPos } from '@/utils/common'
 
 export default defineComponent({
     name: 'Dashboard',
@@ -23,6 +24,12 @@ export default defineComponent({
                 })
                 .catch((err) => console.log(err))
         })
+
+        const arr = reactive([{ a: 1 }, { a: 2 }, { a: 3 }])
+        console.log(toRaw(arr))
+
+        const newArr = exchangeArrPos.call(toRaw(arr), 2, 1)
+        console.log(newArr)
     }
 })
 </script>

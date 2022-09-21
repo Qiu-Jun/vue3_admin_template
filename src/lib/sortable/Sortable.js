@@ -362,17 +362,14 @@ let _checkOutsideTargetEl = function (evt) {
  * @param  {Object}       [options]
  */
 function Sortable(el, options) {
-    console.log('配置')
-    console.log(options, console.log(el.getBoundingClientRect()))
     if (!(el && el.nodeType && el.nodeType === 1)) {
         throw `Sortable: \`el\` must be an HTMLElement, not ${{}.toString.call(
             el
         )}`
     }
-    options.originRectX = el.getBoundingClientRect().x || 0
     this.el = el // root element
     this.options = options = Object.assign({}, options)
-
+    this.originRectX = el.getBoundingClientRect().x || 0
     // Export instance
     el[expando] = this
 
@@ -502,10 +499,12 @@ Sortable.prototype = /** @lends Sortable.prototype */ {
                     ((evt.path && evt.path[0]) ||
                         (evt.composedPath && evt.composedPath()[0]))) ||
                 target,
-            filter = options.filter
+            filter = options.filter,
+            originRectX = this.originRectX
+                ? this.originRectX
+                : el.getBoundingClientRect().x || 0
 
-        options.fallbackOffset.x =
-            evt.x - options.originRectX - options.mouseElW / 2
+        options.fallbackOffset.x = evt.x - originRectX - options.mouseElW / 2
         _saveInputCheckedState(el)
 
         // Don't trigger start event when an element is been dragged, otherwise the evt.oldindex always wrong when set option.group.
