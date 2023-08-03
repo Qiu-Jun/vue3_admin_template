@@ -1,40 +1,36 @@
-<!--
- * :Author: June
- * :Date: 2022-03-07 02:12:16
- * :LastEditTime: 2022-03-30 00:02:43
- * :Description:
--->
 <template>
-    <svg :class="svgClass" aria-hidden="true">
-        <use :xlink:href="iconName" :fill="color" />
-    </svg>
+  <svg :style="{ width, height }">
+    <!-- xlink:href 是使用哪个svg的图标 fill是更改图标的颜色 -->
+
+    <use :xlink:href="prefix + name" :fill="color"></use>
+  </svg>
 </template>
-<script setup>
-import { computed } from 'vue'
-
-const props = defineProps({
-    name: {
-        type: String,
-        required: true
-    },
-    color: {
-        type: String,
-        default: ''
-    }
-})
-const iconName = computed(() => `#icon-${props.name}`)
-const svgClass = computed(() => {
-    if (props.name) return `svg-icon icon-${props.name}`
-    return 'svg-icon'
-})
+<script name="SvgIcon" lang="ts" setup>
+defineProps({
+  // xlink:href的属性值前缀
+  prefix: {
+    type: String,
+    default: '#icon-',
+  },
+  // 需要使用的svg的图标的名字
+  name: {
+    type: String,
+    required: true,
+  },
+  // 需要使用的svg的图标的颜色
+  color: {
+    type: String,
+    default: '#333',
+  },
+  // 需要使用的svg的图标的宽度
+  width: {
+    type: String,
+    default: '1em',
+  },
+  // 需要使用的svg的图标的高度
+  height: {
+    type: String,
+    default: '1em',
+  },
+});
 </script>
-
-<style scoped>
-.svg-icon {
-    width: 1em;
-    height: 1em;
-    position: relative;
-    fill: currentColor;
-    vertical-align: -2px;
-}
-</style>

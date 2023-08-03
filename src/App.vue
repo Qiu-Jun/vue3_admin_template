@@ -1,11 +1,12 @@
-<!--
- * :Author: June
- * :Date: 2022-03-07 02:12:16
- * :LastEditTime: 2022-03-24 17:15:22
- * :Description:
--->
 <template>
-    <el-config-provider>
-        <router-view />
-    </el-config-provider>
+  <el-config-provider :locale="locale">
+    <router-view />
+  </el-config-provider>
 </template>
+
+<script setup lang="ts">
+import { useDark } from '@vueuse/core';
+import zhCn from 'element-plus/dist/locale/zh-cn.mjs';
+const locale = ref(zhCn);
+useDark();
+</script>

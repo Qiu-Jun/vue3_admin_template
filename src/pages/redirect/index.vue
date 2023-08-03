@@ -1,25 +1,15 @@
-<!--
- * :Author: June
- * :Date: 2022-03-24 16:40:17
- * :LastEditTime: 2022-03-24 17:35:53
- * :Description:
--->
+<template>
+  <div />
+</template>
 
-<script>
-import { defineComponent } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+<script setup lang="ts">
+import { useRoute, useRouter } from 'vue-router';
 
-export default defineComponent({
-    setup() {
-        const route = useRoute()
-        const router = useRouter()
-        const { params, query } = route
-        const { path } = params
+const route = useRoute();
+const router = useRouter();
 
-        router.replace({
-            path: `/${path}`,
-            query
-        })
-    }
-})
+const { params, query } = route;
+const { path } = params;
+
+router.replace({ path: '/' + path, query });
 </script>

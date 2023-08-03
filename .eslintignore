@@ -1,5 +1,3 @@
-/dist/*
-/node_modules/**
-.index.html
-auto-imports.d.ts
-components.d.ts
+public
+node_modules
+dist
