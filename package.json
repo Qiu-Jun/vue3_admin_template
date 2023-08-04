@@ -13,6 +13,7 @@
     "@vueuse/core": "^10.3.0",
     "axios": "^1.4.0",
     "element-plus": "^2.3.8",
+    "path-browserify": "^1.0.1",
     "pdfjs-dist": "^3.9.179",
     "pinia": "^2.1.6",
     "tinymce": "^6.6.1",
@@ -25,6 +26,7 @@
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^20.4.5",
+    "@types/path-browserify": "^1.0.0",
     "@typescript-eslint/eslint-plugin": "^6.2.1",
     "@typescript-eslint/parser": "^6.2.1",
     "@vitejs/plugin-vue": "^4.2.3",

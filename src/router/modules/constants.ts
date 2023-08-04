@@ -22,12 +22,19 @@ const constantsRouter: RouteRecordRaw[] = [
         path: '/home',
         name: 'home',
         component: () => import('@/pages/home/index.vue'),
-        meta: { title: '首页', icon: 'shouye', affix: true, sort: '99.99' },
+        meta: { title: '首页', icon: 'homepage', affix: true },
+      },
+      {
+        path: '401',
+        component: () => import('@/pages/error-page/401.vue'),
+        meta: { hidden: true },
+      },
+      {
+        path: '404',
+        component: () => import('@/pages/error-page/404.vue'),
+        meta: { hidden: true },
       },
     ],
-    meta: {
-      sort: '99',
-    },
   },
 ];
 

@@ -1,16 +1,16 @@
-import * as PdfJs from 'pdfjs-dist/build/pdf.js';
-const url = `//cdn.jsdelivr.net/npm/pdfjs-dist@3.9.179/build/pdf.worker.min.js`;
-PdfJs.GlobalWorkerOptions.workerSrc = url;
 class Pdf2Image {
   constructor(pdfDoc) {
     this.pdfDoc = pdfDoc;
   }
 
   static async open(url) {
-    const PdfJs = await import('pdfjs-dist/build/pdf.js');
+    const PdfJs = await import('pdfjs-dist/legacy/build/pdf');
     const Pdfworker = await import('pdfjs-dist/build/pdf.worker.entry');
     PdfJs.GlobalWorkerOptions.workerSrc = Pdfworker;
-    const pdfDoc = await PdfJs.getDocument({ url }).promise;
+    const pdfDoc = await PdfJs.getDocument({
+      url: 'http://127.0.0.1:5173/test.pdf',
+    }).promise;
+    console.log('---------------');
     console.log(pdfDoc);
     return new Pdf2Image(pdfDoc);
   }
@@ -63,6 +63,7 @@ class Pdf2Image {
       canvasContext,
       viewport,
     };
+
     // `将pdf页面渲染为图片并返回promise`
     await page.render(renderContext).promise;
     // `相比原作者封装的方法，增加了一个回调函数，获取canvas的大小，对后续的图片缩放有帮助

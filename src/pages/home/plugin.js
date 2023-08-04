@@ -73,11 +73,12 @@ export function createPlugin(name, svg, accept, callback) {
         input.onchange = async function () {
           const file = this.files[0];
           const close = loadingHandler();
-          console.log(file);
+          // const blob = await fileToBlob(file);
+
           //   const [err, url] = await uploadToOss(file);
           close();
 
-          callback(file, url);
+          callback('', url);
         };
       },
     });

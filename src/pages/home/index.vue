@@ -2,7 +2,6 @@
   <div class="app-container">
     <h1>tinymce</h1>
     <Editor id="tinymce" v-model="tinymceHtml" :init="init"></Editor>
-    <div v-html="tinymceHtml"></div>
   </div>
 </template>
 <script setup>
