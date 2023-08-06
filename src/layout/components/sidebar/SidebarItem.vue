@@ -41,7 +41,6 @@
 import path from 'path-browserify';
 import { isExternal } from '@/utils/index';
 import AppLink from './Link.vue';
-import SvgIcon from '@/components/SvgIcon/index.vue';
 
 const props = defineProps({
   /**

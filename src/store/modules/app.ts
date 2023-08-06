@@ -7,7 +7,7 @@ const useAppStore = defineStore('app', {
   state: () => ({
     device,
     sidebar: {
-      opened: sidebarStatus.value === 'closed',
+      opened: sidebarStatus.value !== 'closed',
       withoutAnimation: false,
     },
   }),

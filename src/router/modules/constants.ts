@@ -20,19 +20,42 @@ const constantsRouter: RouteRecordRaw[] = [
     children: [
       {
         path: '/home',
-        name: 'home',
+        name: 'Home',
         component: () => import('@/pages/home/index.vue'),
-        meta: { title: '首页', icon: 'homepage', affix: true },
+        meta: { title: '首页', icon: 'edit', affix: true },
+        // children: [
+        //   {
+        //     path: '/t1',
+        //     name: 'T1',
+        //     meta: {
+        //       title: 't1',
+        //     },
+        //     component: () => import('@/pages/error-page/401.vue'),
+        //   },
+        // ],
       },
       {
-        path: '401',
+        path: '/401',
         component: () => import('@/pages/error-page/401.vue'),
         meta: { hidden: true },
       },
       {
-        path: '404',
+        path: '/404',
         component: () => import('@/pages/error-page/404.vue'),
         meta: { hidden: true },
+      },
+    ],
+  },
+  {
+    path: '/t',
+    component: Layout,
+    redirect: '/t1',
+    children: [
+      {
+        path: '/t/t1',
+        name: 'T1',
+        component: () => import('@/pages/error-page/401.vue'),
+        meta: { title: '首页1', icon: 'edit' },
       },
     ],
   },

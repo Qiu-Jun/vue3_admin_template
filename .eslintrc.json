@@ -5,6 +5,10 @@
     "node": true,
     "vue/setup-compiler-macros": true
   },
+  "globals": {
+    "ElMessage": true,
+    "ElMessageBox": true
+  },
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",

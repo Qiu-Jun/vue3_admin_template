@@ -1,10 +1,12 @@
 import { createPinia } from 'pinia';
 import type { App } from 'vue';
 
+const store = createPinia();
+
+// modules
 export { default as usePermissionStore } from './modules/permission';
 export { default as useAppStore } from './modules/app';
-
-const store = createPinia();
+export { default as useUserStore } from './modules/user';
 
 export const setupStore = (app: App<Element>) => app.use(store);
 

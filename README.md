@@ -14,4 +14,3 @@
 - [ ] husky + lint
 - [ ] commit lint
 - [ ] Unocss
-- [ ] Svg

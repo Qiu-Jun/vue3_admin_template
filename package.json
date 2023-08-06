@@ -14,6 +14,7 @@
     "axios": "^1.4.0",
     "element-plus": "^2.3.8",
     "path-browserify": "^1.0.1",
+    "path-to-regexp": "^6.2.1",
     "pdfjs-dist": "^3.9.179",
     "pinia": "^2.1.6",
     "tinymce": "^6.6.1",

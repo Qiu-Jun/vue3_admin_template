@@ -1,5 +1,5 @@
 <template>
-  <div class="app-wrapper">
+  <div class="app-wrapper" :class="classObj">
     <!-- 侧边栏 -->
     <SideBar class="sidebar-container" />
 
@@ -17,6 +17,16 @@
 
 <script name="Layout" lang="ts" setup>
 import { AppMain, SideBar, Navbar, TagsView } from './components';
+import { useAppStore } from '@/store';
+
+const appStore = useAppStore();
+
+const classObj = computed(() => ({
+  hideSidebar: !appStore.sidebar.opened,
+  openSidebar: appStore.sidebar.opened,
+  withoutAnimation: appStore.sidebar.withoutAnimation,
+  mobile: appStore.device === 'mobile',
+}));
 </script>
 
 <style lang="scss" scoped>
