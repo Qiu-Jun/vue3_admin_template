@@ -1,8 +1,199 @@
 import { defineStore } from 'pinia';
+import { RouteLocationNormalized } from 'vue-router';
+
+export interface TagView extends Partial<RouteLocationNormalized> {
+  title?: string;
+}
 
 const useTagsViewStore = defineStore('tagsViews', {
-  state: () => ({}),
-  actions: {},
+  state: () => ({
+    visitedViews: [] as TagView[],
+    cachedViews: [] as string[],
+  }),
+  actions: {
+    addVisitedView(view: TagView) {
+      if (this.visitedViews.some((v: TagView) => v.path === view.path)) return;
+      if (view.meta && view.meta.affix) {
+        this.visitedViews.unshift(
+          Object.assign({}, view, {
+            title: view.meta?.title || 'no-name',
+          }),
+        );
+      } else {
+        this.visitedViews.push(
+          Object.assign({}, view, {
+            title: view.meta?.title || 'no-name',
+          }),
+        );
+      }
+    },
+
+    addCachedView(view: TagView) {
+      const viewName = view.name as string;
+      if (this.cachedViews.includes(viewName)) return;
+      if (view.meta?.keepAlive) {
+        this.cachedViews.push(viewName);
+      }
+    },
+
+    delVisitedView(view: TagView) {
+      return new Promise((resolve) => {
+        for (const [i, v] of this.visitedViews.entries()) {
+          if (v.path === view.path) {
+            this.visitedViews.splice(i, 1);
+            break;
+          }
+        }
+        resolve([...this.visitedViews]);
+      });
+    },
+
+    delCachedView(view: TagView) {
+      const viewName = view.name as string;
+      return new Promise((resolve) => {
+        const index = this.cachedViews.indexOf(viewName);
+        index > -1 && this.cachedViews.splice(index, 1);
+        resolve([...this.cachedViews]);
+      });
+    },
+
+    delOtherVisitedViews(view: TagView) {
+      return new Promise((resolve) => {
+        this.visitedViews = this.visitedViews.filter((v) => {
+          return v.meta?.affix || v.path === view.path;
+        });
+        resolve([...this.visitedViews]);
+      });
+    },
+
+    delOtherCachedViews(view: TagView) {
+      const viewName = view.name as string;
+      return new Promise((resolve) => {
+        const index = this.cachedViews.indexOf(viewName);
+        if (index > -1) {
+          this.cachedViews = this.cachedViews.slice(index, index + 1);
+        } else {
+          // if index = -1, there is no cached tags
+          this.cachedViews = [];
+        }
+        resolve([...this.cachedViews]);
+      });
+    },
+
+    updateVisitedView(view: TagView) {
+      for (let v of this.visitedViews) {
+        if (v.path === view.path) {
+          v = Object.assign(v, view);
+          break;
+        }
+      }
+    },
+
+    addView(view: TagView) {
+      this.addVisitedView(view);
+      this.addCachedView(view);
+    },
+
+    delView(view: TagView) {
+      return new Promise((resolve) => {
+        this.delVisitedView(view);
+        this.delCachedView(view);
+        resolve({
+          visitedViews: [...this.visitedViews],
+          cachedViews: [...this.cachedViews],
+        });
+      });
+    },
+
+    delOtherViews(view: TagView) {
+      return new Promise((resolve) => {
+        this.delOtherVisitedViews(view);
+        this.delOtherCachedViews(view);
+        resolve({
+          visitedViews: [...this.visitedViews],
+          cachedViews: [...this.cachedViews],
+        });
+      });
+    },
+
+    delLeftViews(view: TagView) {
+      return new Promise((resolve) => {
+        const currIndex = this.visitedViews.findIndex(
+          (v) => v.path === view.path,
+        );
+        if (currIndex === -1) {
+          return;
+        }
+        this.visitedViews = this.visitedViews.filter((item, index) => {
+          // affix:true 固定tag，例如“首页”
+          if (index >= currIndex || (item.meta && item.meta.affix)) {
+            return true;
+          }
+
+          const cacheIndex = this.cachedViews.indexOf(item.name as string);
+          if (cacheIndex > -1) {
+            this.cachedViews.splice(cacheIndex, 1);
+          }
+          return false;
+        });
+        resolve({
+          visitedViews: [...this.visitedViews],
+        });
+      });
+    },
+    delRightViews(view: TagView) {
+      return new Promise((resolve) => {
+        const currIndex = this.visitedViews.findIndex(
+          (v) => v.path === view.path,
+        );
+        if (currIndex === -1) {
+          return;
+        }
+        this.visitedViews = this.visitedViews.filter((item, index) => {
+          // affix:true 固定tag，例如“首页”
+          if (index <= currIndex || (item.meta && item.meta.affix)) {
+            return true;
+          }
+
+          const cacheIndex = this.cachedViews.indexOf(item.name as string);
+          if (cacheIndex > -1) {
+            this.cachedViews.splice(cacheIndex, 1);
+          }
+          return false;
+        });
+        resolve({
+          visitedViews: [...this.visitedViews],
+        });
+      });
+    },
+
+    delAllViews() {
+      return new Promise((resolve) => {
+        const affixTags = this.visitedViews.filter((tag) => tag.meta?.affix);
+        this.visitedViews = affixTags;
+        this.cachedViews = [];
+        resolve({
+          visitedViews: [...this.visitedViews],
+          cachedViews: [...this.cachedViews],
+        });
+      });
+    },
+
+    delAllVisitedViews() {
+      return new Promise((resolve) => {
+        const affixTags = this.visitedViews.filter((tag) => tag.meta?.affix);
+        this.visitedViews = affixTags;
+        resolve([...this.visitedViews]);
+      });
+    },
+
+    delAllCachedViews() {
+      return new Promise((resolve) => {
+        this.cachedViews = [];
+        resolve([...this.cachedViews]);
+      });
+    },
+  },
 });
 
 export default useTagsViewStore;
