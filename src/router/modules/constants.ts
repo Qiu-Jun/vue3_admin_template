@@ -34,16 +34,6 @@ const constantsRouter: RouteRecordRaw[] = [
         //   },
         // ],
       },
-      {
-        path: '/401',
-        component: () => import('@/pages/error-page/401.vue'),
-        meta: { hidden: true },
-      },
-      {
-        path: '/404',
-        component: () => import('@/pages/error-page/404.vue'),
-        meta: { hidden: true },
-      },
     ],
   },
   {
@@ -58,6 +48,20 @@ const constantsRouter: RouteRecordRaw[] = [
         meta: { title: '首页1', icon: 'edit' },
       },
     ],
+  },
+  {
+    path: '/401',
+    component: () => import('@/pages/error-page/401.vue'),
+    meta: { hidden: true },
+  },
+  {
+    path: '/404',
+    component: () => import('@/pages/error-page/404.vue'),
+    meta: { hidden: true },
+  },
+  {
+    path: '/:pathMatch(.*)',
+    redirect: '/404',
   },
 ];
 

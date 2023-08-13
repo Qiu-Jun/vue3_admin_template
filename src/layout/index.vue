@@ -16,7 +16,7 @@
 </template>
 
 <script name="Layout" lang="ts" setup>
-import { AppMain, SideBar, Navbar, TagsView } from './components';
+import { AppMain, SideBar, Navbar } from './components';
 import { useAppStore } from '@/store';
 
 const appStore = useAppStore();

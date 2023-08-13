@@ -74,5 +74,64 @@ const isActive = (tag: TagView) => tag.path === route.path;
 
 const isAffix = (tag: TagView) => tag.meta && tag.meta.affix;
 
-function handleScroll() {}
+const closeLeftTags = () => {
+  tagsViewStore.delLeftViews(selectedTag.value).then((res: any) => {
+    if (
+      !res.visitedViews.find((item: any) => item.fullPath === route.fullPath)
+    ) {
+      toLastView(res.visitedViews);
+    }
+  });
+};
+const closeRightTags = () => {
+  tagsViewStore.delRightViews(selectedTag.value).then((res: any) => {
+    if (
+      !res.visitedViews.find((item: any) => item.fullPath === route.fullPath)
+    ) {
+      toLastView(res.visitedViews);
+    }
+  });
+};
+
+const closeOtherTags = () => {
+  router.push(selectedTag.value);
+  tagsViewStore.delOtherViews(selectedTag.value).then(() => {
+    moveToCurrentTag();
+  });
+};
+
+const closeAllTags = (view: TagView) => {
+  tagsViewStore.delAllViews().then((res: any) => {
+    toLastView(res.visitedViews, view);
+  });
+};
+
+const openTagMenu = (tag: TagView, e: MouseEvent) => {
+  const menuMinWidth = 105;
+
+  console.log('test', proxy?.$el);
+
+  const offsetLeft = proxy?.$el.getBoundingClientRect().left; // container margin left
+  const offsetWidth = proxy?.$el.offsetWidth; // container width
+  const maxLeft = offsetWidth - menuMinWidth; // left boundary
+  const l = e.clientX - offsetLeft + 15; // 15: margin right
+
+  if (l > maxLeft) {
+    left.value = maxLeft;
+  } else {
+    left.value = l;
+  }
+
+  top.value = e.clientY;
+  tagMenuVisible.value = true;
+  selectedTag.value = tag;
+};
+
+const closeTagMenu = () => {
+  tagMenuVisible.value = false;
+};
+
+const handleScroll = () => {
+  closeTagMenu();
+};
 </script>

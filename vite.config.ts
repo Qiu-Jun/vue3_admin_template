@@ -7,6 +7,7 @@ import AutoImport from 'unplugin-auto-import/vite';
 import path from 'path';
 import UnoCSS from 'unocss/vite';
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
+import vueJsx from '@vitejs/plugin-vue-jsx';
 
 const pathSrc = path.resolve(__dirname, 'src');
 
@@ -16,6 +17,7 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [
       vue(),
+      vueJsx(),
       vueSetupExtend(),
       UnoCSS(),
       AutoImport({
