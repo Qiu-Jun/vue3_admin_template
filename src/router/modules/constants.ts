@@ -37,15 +37,22 @@ const constantsRouter: RouteRecordRaw[] = [
     ],
   },
   {
-    path: '/t',
+    path: '/a',
+    meta: { title: '2' },
     component: Layout,
-    redirect: '/t1',
+    redirect: '/t/t1',
     children: [
       {
         path: '/t/t1',
         name: 'T1',
         component: () => import('@/pages/error-page/401.vue'),
         meta: { title: '首页1', icon: 'edit' },
+      },
+      {
+        path: '/t2',
+        name: 'T2',
+        component: () => import('@/pages/test/index.vue'),
+        meta: { title: '首页2', icon: 'edit' },
       },
     ],
   },
@@ -59,10 +66,10 @@ const constantsRouter: RouteRecordRaw[] = [
     component: () => import('@/pages/error-page/404.vue'),
     meta: { hidden: true },
   },
-  {
-    path: '/:pathMatch(.*)',
-    redirect: '/404',
-  },
+  // {
+  //   path: '/:pathMatch(.*)',
+  //   redirect: '/404',
+  // },
 ];
 
 export default constantsRouter;

@@ -7,7 +7,6 @@
       :text-color="variables.menuText"
       :active-text-color="variables.menuActiveText"
       :unique-opened="false"
-      :collapse-transition="false"
       mode="vertical"
     >
       <SidebarItem
