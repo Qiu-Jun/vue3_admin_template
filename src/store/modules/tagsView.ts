@@ -33,6 +33,7 @@ const useTagsViewStore = defineStore('tagsViews', {
       if (this.cachedViews.includes(viewName)) return;
       if (view.meta?.keepAlive) {
         this.cachedViews.push(viewName);
+        console.log(this.cachedViews);
       }
     },
 
