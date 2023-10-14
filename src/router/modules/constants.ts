@@ -1,3 +1,10 @@
+/*
+ * @Author: June
+ * @Description:
+ * @Date: 2023-10-14 13:34:39
+ * @LastEditors: June
+ * @LastEditTime: 2023-10-14 15:37:54
+ */
 import Layout from '@/layout/index.vue';
 import { type RouteRecordRaw } from 'vue-router';
 
@@ -23,36 +30,39 @@ const constantsRouter: RouteRecordRaw[] = [
         name: 'Home',
         component: () => import('@/pages/home/index.vue'),
         meta: { title: '首页', icon: 'edit', affix: true },
-        // children: [
-        //   {
-        //     path: '/t1',
-        //     name: 'T1',
-        //     meta: {
-        //       title: 't1',
-        //     },
-        //     component: () => import('@/pages/error-page/401.vue'),
-        //   },
-        // ],
       },
     ],
   },
   {
-    path: '/a',
-    meta: { title: '2' },
+    path: '/nest',
+    meta: { title: 'nest' },
     component: Layout,
-    redirect: '/t/t1',
+    redirect: '/nest/nest1-1',
     children: [
       {
-        path: '/t/t1',
-        name: 'T1',
-        component: () => import('@/pages/error-page/401.vue'),
-        meta: { title: '首页1', icon: 'edit' },
+        path: '/nest/nest1-1',
+        name: 'N1',
+        component: () => import('@/pages/nest/nest1/nest1-1/index.vue'),
+        meta: { title: 'nest1-1', icon: 'edit' },
       },
       {
-        path: '/t2',
-        name: 'T2',
+        path: '/nest/nest1-2',
+        name: 'N2',
+        component: () => import('@/pages/nest/nest1/nest1-2/index.vue'),
+        meta: { title: 'nest1-2', icon: 'edit' },
+      },
+    ],
+  },
+  {
+    path: '/test',
+    name: 'Test',
+    component: Layout,
+    children: [
+      {
+        path: 'test/1',
+        name: 'DD',
         component: () => import('@/pages/test/index.vue'),
-        meta: { title: '首页2', icon: 'edit' },
+        meta: { title: 'test', icon: 'edit' },
       },
     ],
   },

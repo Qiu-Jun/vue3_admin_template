@@ -1,20 +1,20 @@
 <!--
  * @Author: June
  * @Description: 
- * @Date: 2023-10-14 13:34:39
+ * @Date: 2023-10-14 15:33:17
  * @LastEditors: June
- * @LastEditTime: 2023-10-14 16:15:18
+ * @LastEditTime: 2023-10-14 16:14:57
 -->
 <template>
-  <div>test</div>
+  <div>nest2</div>
 </template>
 
 <script lang="ts" setup>
 onMounted(() => {
-  console.log('test mounted');
+  console.log('nest2 mounted');
 });
 
 onActivated(() => {
-  console.log('test onActivated');
+  console.log('nest1-1 onActivated');
 });
 </script>

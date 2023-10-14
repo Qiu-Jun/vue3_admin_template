@@ -3,10 +3,10 @@
     <!-- 侧边栏 -->
     <SideBar class="sidebar-container" />
 
-    <div :class="{ hasTagsView: true }" class="main-container">
-      <div :class="{ 'fixed-header': false }">
+    <div :class="{ hasTagsView: showTagsViews }" class="main-container">
+      <div :class="{ 'fixed-header': fixedHeader }">
         <Navbar />
-        <TagsView />
+        <TagsView v-if="showTagsViews" />
       </div>
 
       <!--主页面-->
@@ -16,11 +16,12 @@
 </template>
 
 <script name="Layout" lang="ts" setup>
-import { AppMain, SideBar, Navbar } from './components';
+import { AppMain, SideBar, Navbar, TagsView } from './components';
 import { useAppStore } from '@/store';
 
 const appStore = useAppStore();
-
+const showTagsViews = computed(() => appStore.showTagsViews);
+const fixedHeader = computed(() => appStore.fixedHeader);
 const classObj = computed(() => ({
   hideSidebar: !appStore.sidebar.opened,
   openSidebar: appStore.sidebar.opened,

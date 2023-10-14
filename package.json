@@ -9,16 +9,16 @@
     "format": "prettier --write './**/*.{js,jsx,tsx,vue,scss,html}'"
   },
   "dependencies": {
-    "@tinymce/tinymce-vue": "^5.1.0",
+    "@element-plus/icons-vue": "^2.1.0",
     "@vueuse/core": "^10.3.0",
     "axios": "^1.4.0",
+    "color-gradient-picker-vue3": "^2.0.6",
     "element-plus": "^2.3.8",
     "path-browserify": "^1.0.1",
     "path-to-regexp": "^6.2.1",
     "pdfjs-dist": "^3.9.179",
     "pinia": "^2.1.6",
     "sortablejs": "^1.15.0",
-    "tinymce": "^6.6.1",
     "vue": "^3.3.4",
     "vue-router": "^4.2.4"
   },

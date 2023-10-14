@@ -16,7 +16,7 @@
           class="tags-item-close"
           @click.prevent.stop="closeSelectedTag(tag)"
         >
-          <i-ep-close class="text-[10px]" />
+          <el-icon><CircleCloseFilled /></el-icon>
         </span>
       </router-link>
     </scroll-pane>
@@ -24,7 +24,7 @@
     <!-- tag标签操作菜单 -->
     <ul
       v-show="tagMenuVisible"
-      class="tag-menu"
+      class="tag-menu f-center"
       :style="{ left: left + 'px', top: top + 'px' }"
     >
       <li @click="refreshSelectedTag(selectedTag)">
@@ -57,22 +57,59 @@
 
 <script name="TagsView" lang="ts" setup>
 import { ComponentInternalInstance } from 'vue';
+import { CircleCloseFilled } from '@element-plus/icons-vue';
 import { storeToRefs } from 'pinia';
 import path from 'path-browserify';
 import { useRoute, useRouter } from 'vue-router';
 import ScrollPane from './ScrollPane.vue';
-import { type TagView, useTagsViewStore } from '@/store';
+import { type TagView, useTagsViewStore, usePermissionStore } from '@/store';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 const router = useRouter();
 const route = useRoute();
-
+const scrollPaneRef = ref();
+const permissionStore = usePermissionStore();
 const tagsViewStore = useTagsViewStore();
 const { visitedViews } = storeToRefs(tagsViewStore);
+const affixTags = ref<TagView[]>([]);
+const selectedTag = ref({});
+const left = ref(0);
+const top = ref(0);
 
 const isActive = (tag: TagView) => tag.path === route.path;
 
 const isAffix = (tag: TagView) => tag.meta && tag.meta.affix;
+
+const isFirstView = () => {
+  try {
+    return (
+      (selectedTag.value as TagView).fullPath ===
+        tagsViewStore.visitedViews[1].fullPath ||
+      (selectedTag.value as TagView).fullPath === '/home'
+    );
+  } catch (err) {
+    return false;
+  }
+};
+
+const isLastView = () => {
+  try {
+    return (
+      (selectedTag.value as TagView).fullPath ===
+      tagsViewStore.visitedViews[tagsViewStore.visitedViews.length - 1].fullPath
+    );
+  } catch (err) {
+    return false;
+  }
+};
+
+const closeSelectedTag = (view: TagView) => {
+  tagsViewStore.delView(view).then((res: any) => {
+    if (isActive(view)) {
+      toLastView(res.visitedViews, view);
+    }
+  });
+};
 
 const closeLeftTags = () => {
   tagsViewStore.delLeftViews(selectedTag.value).then((res: any) => {
@@ -106,11 +143,27 @@ const closeAllTags = (view: TagView) => {
   });
 };
 
+const refreshSelectedTag = (view: TagView) => {
+  tagsViewStore.delCachedView(view);
+  const { fullPath } = view;
+  nextTick(() => {
+    router.replace({ path: '/redirect' + fullPath }).catch((err) => {
+      console.warn(err);
+    });
+  });
+};
+
+const tagMenuVisible = ref(false); // 标签操作菜单显示状态
+watch(tagMenuVisible, (value) => {
+  if (value) {
+    document.body.addEventListener('click', closeTagMenu);
+  } else {
+    document.body.removeEventListener('click', closeTagMenu);
+  }
+});
+
 const openTagMenu = (tag: TagView, e: MouseEvent) => {
-  const menuMinWidth = 105;
-
-  console.log('test', proxy?.$el);
-
+  const menuMinWidth = 120;
   const offsetLeft = proxy?.$el.getBoundingClientRect().left; // container margin left
   const offsetWidth = proxy?.$el.offsetWidth; // container width
   const maxLeft = offsetWidth - menuMinWidth; // left boundary
@@ -134,4 +187,164 @@ const closeTagMenu = () => {
 const handleScroll = () => {
   closeTagMenu();
 };
+
+const initTags = () => {
+  const tags: TagView[] = filterAffixTags(permissionStore.routes);
+  affixTags.value = tags;
+  for (const tag of tags) {
+    if (tag.name) {
+      tagsViewStore.addVisitedView(tag);
+    }
+  }
+};
+
+watch(
+  route,
+  () => {
+    addTags();
+    moveToCurrentTag();
+  },
+  {
+    //初始化立即执行
+    immediate: true,
+  },
+);
+
+onMounted(() => {
+  initTags();
+});
+
+function addTags() {
+  if (route.name) {
+    tagsViewStore.addView(route);
+  }
+}
+
+function moveToCurrentTag() {
+  nextTick(() => {
+    for (const r of tagsViewStore.visitedViews) {
+      if (r.path === route.path) {
+        scrollPaneRef.value.moveToTarget(r);
+        // when query is different then update
+        if (r.fullPath !== route.fullPath) {
+          tagsViewStore.updateVisitedView(route);
+        }
+      }
+    }
+  });
+}
+
+function toLastView(visitedViews: TagView[], view?: any) {
+  const latestView = visitedViews.slice(-1)[0];
+  if (latestView && latestView.fullPath) {
+    router.push(latestView.fullPath);
+  } else {
+    // now the default is to redirect to the home page if there is no tags-view,
+    // you can adjust it according to your needs.
+    if (view.name === 'Home') {
+      // to reload home page
+      router.replace({ path: '/redirect' + view.fullPath });
+    } else {
+      router.push('/');
+    }
+  }
+}
+
+function filterAffixTags(routes: any[], basePath = '/') {
+  let tags: TagView[] = [];
+
+  routes.forEach((route) => {
+    if (route.meta && route.meta.affix) {
+      const tagPath = path.resolve(basePath, route.path);
+      tags.push({
+        fullPath: tagPath,
+        path: tagPath,
+        name: route.name,
+        meta: { ...route.meta },
+      });
+    }
+
+    if (route.children) {
+      const childTags = filterAffixTags(route.children, route.path);
+      if (childTags.length >= 1) {
+        tags = tags.concat(childTags);
+      }
+    }
+  });
+  return tags;
+}
 </script>
+
+<style lang="scss" scoped>
+.tags-container {
+  width: 100%;
+  height: 34px;
+  background-color: var(--el-bg-color);
+  border: 1px solid var(--el-border-color-light);
+  box-shadow: 0 1px 1px var(--el-box-shadow-light);
+
+  .tags-item {
+    display: inline-block;
+    padding: 3px 8px;
+    margin: 4px 0 0 5px;
+    font-size: 12px;
+    cursor: pointer;
+    border: 1px solid var(--el-border-color-light);
+
+    &:first-of-type {
+      margin-left: 15px;
+    }
+
+    &:last-of-type {
+      margin-right: 15px;
+    }
+
+    &:hover {
+      color: var(--el-color-primary);
+    }
+
+    &.active {
+      color: #fff;
+      background-color: var(--el-color-primary);
+      border-color: var(--el-color-primary);
+
+      &::before {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        margin-right: 5px;
+        content: '';
+        background: #fff;
+        border-radius: 50%;
+      }
+    }
+
+    &-close {
+      border-radius: 100%;
+
+      &:hover {
+        color: #fff;
+        background: rgb(0 0 0 / 16%);
+      }
+    }
+  }
+}
+
+.tag-menu {
+  position: absolute;
+  z-index: 99;
+  font-size: 12px;
+  background: var(--el-bg-color-overlay);
+  border-radius: 4px;
+  box-shadow: var(--el-box-shadow-light);
+
+  li {
+    padding: 8px;
+    cursor: pointer;
+
+    &:hover {
+      background: var(--el-fill-color-light);
+    }
+  }
+}
+</style>

@@ -1,11 +1,21 @@
+/*
+ * @Author: June
+ * @Description:
+ * @Date: 2023-10-14 13:34:39
+ * @LastEditors: June
+ * @LastEditTime: 2023-10-14 14:46:16
+ */
 import { defineStore } from 'pinia';
 import { useStorage } from '@vueuse/core';
+import defaultSettings from '@/config/settings';
 const sidebarStatus = useStorage('sidebarStatus', 'closed');
 const device = useStorage('device', 'desktop');
 
 const useAppStore = defineStore('app', {
   state: () => ({
     device,
+    showTagsViews: defaultSettings.tagsView,
+    fixedHeader: defaultSettings.fixedHeader,
     sidebar: {
       opened: sidebarStatus.value !== 'closed',
       withoutAnimation: false,

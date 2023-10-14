@@ -24,7 +24,6 @@
       <el-dropdown trigger="click">
         <div class="avatar-container">
           <img :src="userStore.avatar + '?imageView2/1/w/80/h/80'" />
-          <i-ep-caret-bottom class="w-3 h-3" />
         </div>
         <template #dropdown>
           <el-dropdown-menu>
@@ -33,17 +32,11 @@
             </router-link>
             <a
               target="_blank"
-              href="https://github.com/youlaitech/vue3-element-admin"
+              href="https://github.com/Qiu-Jun/vue3_admin_template.git"
             >
               <el-dropdown-item>Github</el-dropdown-item>
             </a>
 
-            <a
-              target="_blank"
-              href="https://juejin.cn/post/7228990409909108793"
-            >
-              <el-dropdown-item>document</el-dropdown-item>
-            </a>
             <el-dropdown-item divided @click="logout"> 退出 </el-dropdown-item>
           </el-dropdown-menu>
         </template>
@@ -56,7 +49,7 @@
 import { storeToRefs } from 'pinia';
 import { useFullscreen } from '@vueuse/core';
 import { useUserStore, useAppStore } from '@/store';
-import { useRoute, useRouter } from 'vue-router';
+// import { useRoute, useRouter } from 'vue-router';
 import Hamburger from './Hamburger/index.vue';
 import Breadcrumb from './Breadcrumb/index.vue';
 
@@ -65,9 +58,9 @@ const userStore = useUserStore();
 
 const { device } = storeToRefs(appStore); // 设备类型：desktop-宽屏设备 || mobile-窄屏设备
 
-const route = useRoute();
-const router = useRouter();
-console.log(route, router);
+// const route = useRoute();
+// const router = useRouter();
+
 /**
  * 左侧菜单栏显示/隐藏
  */
